@@ -9,13 +9,13 @@ const description = "Стабильные выплаты 2 раза в меся�
 const buttonText = "Откликнуться за 30 секунд";
 ---
 
-<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-[var(--hero-bg)]">
+<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-[var(--hero-bg)] opacity-0 animate-fadeInHero">
     <!-- Контент -->
     <div class="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-16">
         <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
             <!-- Левая колонка с изображением -->
             <div class="md:w-1/2 flex justify-center items-center">
-                <div class="w-full max-w-lg">
+                <div class="w-full max-w-lg opacity-0 animate-fadeInImage">
                     <Image
                         src={HeroImage}
                         alt="Сантехник работает в Ижевске"
@@ -27,7 +27,7 @@ const buttonText = "Откликнуться за 30 секунд";
             </div>
 
             <!-- Правая колонка с текстом -->
-            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left">
+            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left opacity-0 animate-fadeInContent">
                 <div class="space-y-4 md:space-y-6">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-[var(--hero-text-primary)]">
                         {headline}
@@ -38,7 +38,7 @@ const buttonText = "Откликнуться за 30 секунд";
                 </div>
 
                 <!-- Кнопка -->
-                <div class="pt-6 md:pt-8 flex justify-center md:justify-start">
+                <div class="pt-6 md:pt-8 flex justify-center md:justify-start opacity-0 animate-fadeInButton">
                     <Button
                             href="/apply"
                             client:load
@@ -51,30 +51,3 @@ const buttonText = "Откликнуться за 30 секунд";
         </div>
     </div>
 </section>
-
-<style>
-    /* Плавная анимация появления */
-    section {
-        animation: fadeIn 1s ease-out;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Улучшение читаемости текста */
-    h1 {
-        text-shadow: none;
-    }
-
-    p {
-        text-shadow: none;
-    }
-</style>

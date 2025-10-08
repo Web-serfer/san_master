@@ -28,3 +28,94 @@
   --accent-light: #fef3c7;    /* Светлый желтый (200) */
   --border-color: #e5e7eb;    /* Серый (200) */
 }
+
+/* Анимации появления */
+@keyframes fadeInHeader {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInNav {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInHero {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInImage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInButton {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInHeader {
+  animation: fadeInHeader 0.8s ease-out forwards;
+}
+
+.animate-fadeInNav {
+  animation: fadeInNav 0.6s ease-out forwards;
+}
+
+.animate-fadeInHero {
+  animation: fadeInHero 0.8s ease-out 0.3s forwards;
+}
+
+.animate-fadeInContent {
+  animation: fadeInContent 0.6s ease-out 0.5s forwards;
+}
+
+.animate-fadeInImage {
+  animation: fadeInImage 0.6s ease-out 0.4s forwards;
+}
+
+.animate-fadeInButton {
+  animation: fadeInButton 0.6s ease-out 0.7s forwards;
+}
