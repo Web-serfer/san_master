@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+:root {
+  /* Основные цвета для Header (нейтральные оттенки серого и белого) */
+  --header-bg-start: #ffffff; /* Белый */
+  --header-bg-end: #f9fafb;   /* Очень светлый серый (50) */
+  --header-text: #374151;     /* Темно-серый (700) */
+  --header-hover: #9ca3af;    /* Серый (400) */
+  
+  /* Цвета для кнопки WhatsApp в Header */
+  --whatsapp-bg: #22c55e;      /* Зеленый (500) */
+  --whatsapp-hover: #16a34a;   /* Темнее зеленый (600) */
+  --whatsapp-text: #ffffff;    /* Белый */
+  
+  /* Цвета для Hero (желтые оттенки, серый и белый) */
+  --hero-bg: #ffffff;         /* Белый */
+  --hero-text-primary: #374151; /* Темно-серый (700) */
+  --hero-text-secondary: #6b7280; /* Серый (500) */
+  
+  /* Цвета для кнопки */
+  --button-bg: #f59e0b;       /* Желтый (500) */
+  --button-hover: #d97706;    /* Темнее желтый (600) */
+  --button-text: #ffffff;     /* Белый */
+  
+  /* Дополнительные акцентные цвета */
+  --accent-primary: #fbbf24;  /* Желтый (400) */
+  --accent-secondary: #f59e0b; /* Желтый (500) */
+  --accent-light: #fef3c7;    /* Светлый желтый (200) */
+  --border-color: #e5e7eb;    /* Серый (200) */
+}

@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import Button from '@components/base/Button.tsx';
+import HeroImage from '@assets/images/Hero.png';
+
+
+const headline = "Работа сантехником в Ижевске. Зарплата от 80 000 ₽ на руки";
+const description = "Стабильные выплаты 2 раза в месяц. Предоставляем автомобиль и инструмент. Официальное трудоустройство.";
+const buttonText = "Откликнуться за 30 секунд";
+---
+
+<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-[var(--hero-bg)]">
+    <!-- Контент -->
+    <div class="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-16">
+        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+            <!-- Левая колонка с изображением -->
+            <div class="md:w-1/2 flex justify-center items-center">
+                <div class="w-full max-w-lg">
+                    <Image
+                        src={HeroImage}
+                        alt="Сантехник работает в Ижевске"
+                        class="w-full h-auto rounded-lg shadow-lg object-cover border-2 border-[var(--accent-light)]"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+            </div>
+
+            <!-- Правая колонка с текстом -->
+            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left">
+                <div class="space-y-4 md:space-y-6">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-[var(--hero-text-primary)]">
+                        {headline}
+                    </h1>
+                    <p class="text-lg md:text-xl leading-relaxed text-[var(--hero-text-secondary)] max-w-2xl">
+                        {description}
+                    </p>
+                </div>
+
+                <!-- Кнопка -->
+                <div class="pt-6 md:pt-8 flex justify-center md:justify-start">
+                    <Button
+                            href="/apply"
+                            client:load
+                            class="w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] text-[var(--button-text)] transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                    >
+                        {buttonText}
+                    </Button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Плавная анимация появления */
+    section {
+        animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Улучшение читаемости текста */
+    h1 {
+        text-shadow: none;
+    }
+
+    p {
+        text-shadow: none;
+    }
+</style>

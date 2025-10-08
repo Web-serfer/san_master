@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@astrojs/image':
+        specifier: ^0.18.0
+        version: 0.18.0(astro@5.14.1(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(typescript@5.9.3))(sharp@0.34.4)
       '@astrojs/node':
         specifier: ^9.4.4
         version: 9.4.4(astro@5.14.1(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(typescript@5.9.3))
@@ -36,8 +39,14 @@ importers:
       '@biomejs/biome':
         specifier: ^2.2.5
         version: 2.2.5
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
 packages:
+
+  '@altano/tiny-async-pool@1.0.3':
+    resolution: {integrity: sha512-B4lSen5B2M/aGtgQ12aJ9Ms4eZXCRtJMhM7p5KpAImPAeIaOojTWEKozIB/1xWwCLRZsy0SHW+OlOZQFOBOwJQ==}
 
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
@@ -47,6 +56,16 @@ packages:
 
   '@astrojs/compiler@2.13.0':
     resolution: {integrity: sha512-mqVORhUJViA28fwHYaWmsXSzLO9osbdZ5ImUfxBarqsYdMlPbqAqGJCxsNzvppp1BEzc1mJNjOVvQqeDN8Vspw==}
+
+  '@astrojs/image@0.18.0':
+    resolution: {integrity: sha512-IAsECAGG5s0u7KItQMVVfhU8gAkIeIlzoSga6LymLvWvTWJacjxtnRYjct5uR03kuxIYAdjZhwQowKR1bYpwDA==}
+    deprecated: '@astrojs/image is deprecated in favor of astro:assets. Please see the migration guide for more information: https://docs.astro.build/en/guides/upgrade-to/v3/\#removed-astrojsimage'
+    peerDependencies:
+      astro: ^2.10.15
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      sharp:
+        optional: true
 
   '@astrojs/internal-helpers@0.7.3':
     resolution: {integrity: sha512-6Pl0bQEIChuW5wqN7jdKrzWfCscW2rG/Cz+fzt4PhSQX2ivBpnhXgFUCs0M3DCYvjYHnPVG2W36X5rmFjZ62sw==}
@@ -1369,6 +1388,11 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
+  image-size@1.2.1:
+    resolution: {integrity: sha512-rH+46sQJ2dlwfjfhCyNx5thzrv+dtmBIhPHk0zgRUukHzZ/kRueTJXoYYsclBaKcSMBWuGbOFXtioLpzTb5euw==}
+    engines: {node: '>=16.x'}
+    hasBin: true
+
   import-meta-resolve@4.2.0:
     resolution: {integrity: sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==}
 
@@ -1682,6 +1706,11 @@ packages:
     resolution: {integrity: sha512-xRc4oEhT6eaBpU1XF7AjpOFD+xQmXNB5OVKwp4tqCuBpHLS/ZbBDrc07mYTDqVMg6PfxUjjNp85O6Cd2Z/5HWA==}
     engines: {node: '>= 0.6'}
 
+  mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+
   minipass@3.3.6:
     resolution: {integrity: sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==}
     engines: {node: '>=8'}
@@ -1859,6 +1888,9 @@ packages:
 
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
+
+  queue@6.0.2:
+    resolution: {integrity: sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==}
 
   radix3@1.1.2:
     resolution: {integrity: sha512-b484I/7b8rDEdSDKckSSBA8knMpcdsXudlE/LNL639wFoHKwLbEkQFZHWEYwDC0wa0FKUcCY+GAF73Z7wxNVFA==}
@@ -2365,6 +2397,8 @@ packages:
 
 snapshots:
 
+  '@altano/tiny-async-pool@1.0.3': {}
+
   '@antfu/install-pkg@1.1.0':
     dependencies:
       package-manager-detector: 1.4.0
@@ -2373,6 +2407,18 @@ snapshots:
   '@antfu/utils@8.1.1': {}
 
   '@astrojs/compiler@2.13.0': {}
+
+  '@astrojs/image@0.18.0(astro@5.14.1(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(typescript@5.9.3))(sharp@0.34.4)':
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.3
+      astro: 5.14.1(@types/node@24.7.0)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(typescript@5.9.3)
+      http-cache-semantics: 4.2.0
+      image-size: 1.2.1
+      kleur: 4.1.5
+      magic-string: 0.30.19
+      mime: 3.0.0
+    optionalDependencies:
+      sharp: 0.34.4
 
   '@astrojs/internal-helpers@0.7.3': {}
 
@@ -3784,6 +3830,10 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  image-size@1.2.1:
+    dependencies:
+      queue: 6.0.2
+
   import-meta-resolve@4.2.0: {}
 
   inherits@2.0.4: {}
@@ -4235,6 +4285,8 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
+  mime@3.0.0: {}
+
   minipass@3.3.6:
     dependencies:
       yallist: 4.0.0
@@ -4401,6 +4453,10 @@ snapshots:
       once: 1.4.0
 
   quansync@0.2.11: {}
+
+  queue@6.0.2:
+    dependencies:
+      inherits: 2.0.4
 
   radix3@1.1.2: {}
 
