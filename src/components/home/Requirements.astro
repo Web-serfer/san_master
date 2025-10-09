@@ -1,0 +1,176 @@
+---
+import { Icon } from 'astro-icon/components'
+import SectionTitle from '@components/base/SectionTitle.astro';
+
+const requirementsData = [
+    {
+        iconName: 'calendar',
+        text: 'Опыт работы от 1-3 лет в сфере сантехники',
+        description: 'Практический опыт выполнения сантехнических работ'
+    },
+    {
+        iconName: 'chat-bubble',
+        text: 'Умение вежливо и профессионально общаться с клиентами',
+        description: 'Коммуникативные навыки и клиентоориентированность'
+    },
+    {
+        iconName: 'check-badge',
+        text: 'Ответственность, пунктуальность и желание работать',
+        description: 'Надежность и профессиональный подход к задачам'
+    },
+    {
+        iconName: 'screwdriver',
+        text: 'Наличие собственного инструмента будет преимуществом',
+        description: 'Готовность к работе с профессиональным оборудованием'
+    }
+];
+---
+
+<section class="bg-slate-50 section-padding" id="requirements">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <SectionTitle
+                title="Кого мы ищем"
+                subtitle="Мы ищем ответственных и квалифицированных сантехников, которые готовы работать на результат"
+        />
+
+        <ul role="list" class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:max-w-none lg:grid-cols-4 lg:gap-8">
+            {requirementsData.map((item, index) => (
+                    <li class="flip-card h-64 [perspective:1000px]">
+                        <!-- Контейнер для переворота -->
+                        <div class="flip-card-inner relative w-full h-full rounded-2xl transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+
+                            <!-- Лицевая сторона карточки -->
+                            <div class="flip-card-front absolute inset-0 bg-white rounded-2xl border border-[var(--border-color)] p-8 flex flex-col items-center justify-center text-center [backface-visibility:hidden]">
+                                <!-- Иконка -->
+                                <div class="flex items-center justify-center w-16 h-16 bg-[var(--accent-primary)]/10 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-500">
+                                    <Icon
+                                            name={item.iconName}
+                                            class="w-8 h-8 text-[var(--accent-primary)]"
+                                            aria-hidden="true"
+                                    />
+                                </div>
+
+                                <!-- Текст -->
+                                <p class="text-lg font-semibold text-[var(--hero-text-primary)] leading-tight">
+                                    {item.text}
+                                </p>
+
+                                <!-- Индикатор переворота -->
+                                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <Icon name="arrow-path" class="w-5 h-5 text-[var(--accent-primary)]" aria-hidden="true" />
+                                </div>
+                            </div>
+
+                            <!-- Обратная сторона карточки -->
+                            <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary)]/90 rounded-2xl p-8 flex flex-col items-center justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)] text-white">
+                                <!-- Номер карточки -->
+                                <div class="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">
+                                    {index + 1}
+                                </div>
+
+                                <!-- Иконка на обороте -->
+                                <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl mb-4">
+                                    <Icon
+                                            name={item.iconName}
+                                            class="w-6 h-6 text-white"
+                                            aria-hidden="true"
+                                    />
+                                </div>
+
+                                <!-- Описание -->
+                                <p class="text-base font-medium leading-relaxed mb-4">
+                                    {item.description}
+                                </p>
+
+                                <!-- Декор -->
+                                <div class="absolute bottom-4 right-4 opacity-50">
+                                    <Icon name="sparkles" class="w-5 h-5 text-white" aria-hidden="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+            ))}
+        </ul>
+
+        <!-- Дополнительная информация -->
+        <div class="mt-12 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/80 rounded-xl px-6 py-3 border border-[var(--border-color)]">
+                <Icon name="information-circle" class="w-5 h-5 text-[var(--accent-primary)]" aria-hidden="true" />
+                <span class="text-sm text-[var(--hero-text-secondary)] font-medium">
+                    Готовы рассмотреть кандидатов с меньшим опытом, но с большим желанием учиться
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+    /* Анимации для карточек */
+    .flip-card {
+        perspective: 1000px;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .flip-card-back {
+        transform: rotateY(180deg);
+    }
+
+    /* Плавное появление карточек */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Анимация при скролле */
+    @media (prefers-reduced-motion: no-preference) {
+        [id="requirements"] .flip-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        [id="requirements"] .flip-card:nth-child(1) { animation-delay: 0.1s; }
+        [id="requirements"] .flip-card:nth-child(2) { animation-delay: 0.2s; }
+        [id="requirements"] .flip-card:nth-child(3) { animation-delay: 0.3s; }
+        [id="requirements"] .flip-card:nth-child(4) { animation-delay: 0.4s; }
+    }
+
+    /* Микро-анимации для улучшения UX */
+    .flip-card {
+        cursor: pointer;
+    }
+
+    .flip-card-front {
+        transition: all 0.3s ease;
+    }
+
+    .flip-card:hover .flip-card-front {
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+    }
+</style>

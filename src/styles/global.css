@@ -119,3 +119,8 @@
 .animate-fadeInButton {
   animation: fadeInButton 0.6s ease-out 0.7s forwards;
 }
+
+/* Универсальные паддинги для всех секций */
+.section-padding {
+  @apply py-16 sm:py-20 lg:py-24;
+}

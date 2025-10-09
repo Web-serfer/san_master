@@ -1,4 +1,7 @@
 ---
+import Button from '@components/base/Button.tsx';
+import SectionTitle from '@components/base/SectionTitle.astro';
+
 const benefits = [
     {
         text: 'Платим честно и вовремя',
@@ -33,31 +36,78 @@ const benefits = [
 ];
 ---
 
-<section class="bg-[#f3f4f6] py-16 opacity-0 animate-fadeInContent">
+<section class="bg-[#f3f4f6] section-padding opacity-0 animate-fadeInContent">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl md:text-4xl font-bold text-center text-[var(--hero-text-primary)] mb-12">Почему стоит работать у нас?</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit) => (
-                    <div
-                            class:list={[
-                                'flex gap-4 p-6 bg-white rounded-lg shadow-md border border-[var(--border-color)] transition-all duration-300 hover:shadow-lg',
-                                benefit.align === 'start' ? 'items-start' : 'items-center'
-                            ]}
-                    >
-                        <svg
-                                class:list={[
-                                    'w-8 h-8 text-[var(--accent-primary)]',
+        <SectionTitle 
+            title="Почему стоит работать у нас?"
+            subtitle="Создаём комфортные условия для профессионального роста и развития"
+        />
 
-                                    benefit.align === 'start' && 'flex-shrink-0'
-                                ]}
-                                fill="currentColor"
-                                viewBox="0 0 256 256"
-                        >
-                            <path d={benefit.iconPath}></path>
-                        </svg>
-                        <p class="text-base font-medium text-[var(--hero-text-secondary)]">{benefit.text}</p>
-                    </div>
+        <!-- Сетка преимуществ -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 opacity-0 animate-fadeInContent" style="animation-delay: 0.5s;">
+            {benefits.map((benefit, index) => (
+                    <article
+                            class={`group flex gap-4 p-6 lg:p-8 bg-white rounded-xl shadow-sm border border-[var(--border-color)] 
+                           transition-all duration-300 hover:shadow-lg hover:scale-[1.02] 
+                           hover:border-[var(--accent-primary)]/20
+                           ${benefit.align === 'start' ? 'items-start' : 'items-center'}`}
+                            style={`animation-delay: ${index * 100 + 700}ms;`}
+                    >
+                        <!-- Иконка -->
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-[var(--accent-primary)]/10 rounded-lg
+                                    flex items-center justify-center group-hover:bg-[var(--accent-primary)]/20
+                                    transition-colors duration-300">
+                                <svg
+                                        class="w-5 h-5 lg:w-6 lg:h-6 text-[var(--accent-primary)]
+                                       group-hover:scale-110 transition-transform duration-300"
+                                        fill="currentColor"
+                                        viewBox="0 0 256 256"
+                                        aria-hidden="true"
+                                >
+                                    <path d={benefit.iconPath}></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Текст -->
+                        <div class={benefit.align === 'start' ? 'space-y-2' : 'space-y-3'}>
+                            <p class="text-base lg:text-lg font-semibold text-[var(--hero-text-primary)]
+                                  leading-relaxed group-hover:text-[var(--accent-primary)]
+                                  transition-colors duration-300">
+                                {benefit.text}
+                            </p>
+                        </div>
+                    </article>
             ))}
         </div>
+
+        <!-- CTA кнопка -->
+        <footer class="text-center mt-12 lg:mt-16">
+            <Button
+                href="/apply"
+                class="w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] !text-white transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+            >
+                Откликнуться на вакансию
+            </Button>
+        </footer>
     </div>
 </section>
+
+<style>
+    /* Анимации для Astro */
+    .animate-fadeInContent {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
