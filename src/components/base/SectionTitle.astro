@@ -1,0 +1,29 @@
+---
+interface SectionTitleProps {
+    title: string;
+    subtitle?: string;
+    align?: 'left' | 'center' | 'right';
+    class?: string;
+}
+  
+const { title, subtitle, align = 'center', class: className = '' } = Astro.props;
+
+const alignClass = {
+  'left': 'text-left',
+  'right': 'text-right',
+  'center': 'text-center'
+}[align];
+  
+const combinedClasses = `${alignClass} mb-12 lg:mb-16 ${className}`;
+---
+  
+<header class={combinedClasses}>
+  <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--hero-text-primary)] mb-4">
+    {title}
+  </h2>
+  {subtitle && (
+    <p class="text-lg text-[var(--hero-text-secondary)] max-w-2xl mx-auto">
+      {subtitle}
+    </p>
+  )}
+</header>
