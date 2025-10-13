@@ -1,11 +1,18 @@
 ---
 interface ButtonProps {
     href?: string;
+    onClick?: () => void;
     class?: string;
+    type?: 'button' | 'submit' | 'reset';
     children: any;
 }
 
-const { href = '#', class: additionalClass = '' } = Astro.props;
+const { 
+    href, 
+    onClick, 
+    class: additionalClass = '', 
+    type = 'button' 
+} = Astro.props;
 
 // Базовые стили кнопки
 const baseClasses = "inline-block py-4 px-8 bg-brand-yellow text-zinc-900 font-semibold text-center rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-brand-yellow-dark hover:-translate-y-0.5";
@@ -14,6 +21,12 @@ const baseClasses = "inline-block py-4 px-8 bg-brand-yellow text-zinc-900 font-s
 const combinedClasses = `${baseClasses} ${additionalClass}`;
 ---
 
-<a href={href} class={combinedClasses}>
-    <slot />
-</a>
+{href ? (
+    <a href={href} class={combinedClasses}>
+        <slot />
+    </a>
+) : (
+    <button type={type} class={combinedClasses} onclick={onClick}>
+        <slot />
+    </button>
+)}

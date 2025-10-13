@@ -37,16 +37,182 @@ const buttonText = "Откликнуться за 30 секунд";
                     </p>
                 </div>
 
-                <!-- Кнопка -->
-                <div class="pt-6 md:pt-8 flex justify-center md:justify-start opacity-0 animate-fadeInButton">
-                    <Button
-                            href="/apply"
-                            client:load
-                            class="w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] !text-white transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                    >
-                        {buttonText}
-                    </Button>
+                <!-- Форма для ввода номера телефона -->
+                <div class="pt-6 md:pt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start opacity-0 animate-fadeInButton">
+                    <form class="w-full sm:w-auto" id="jobApplicationForm">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="phoneInput"
+                                placeholder="+7 (XXX) XXX-XX-XX"
+                                required
+                                pattern="^(\+7|8)\s?\(?[\d]{3}\)?[\s\-\d]{7,10}$"
+                                class="px-6 py-4 text-lg rounded-lg border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent w-full sm:w-80"
+                                maxlength="18"
+                            />
+                            <button
+                                type="submit"
+                                class="px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg whitespace-nowrap"
+                            >
+                                Откликнуться
+                            </button>
+                        </div>
+                        <!-- Скрытое поле для идентификации типа формы -->
+                        <input type="hidden" name="formType" value="jobApplication" />
+                    </form>
                 </div>
+                
+                <!-- Контейнер для сообщения об отправке -->
+                <div id="formMessage" class="hidden pt-4 text-center">
+                    <p class="text-green-600 font-medium"></p>
+                </div>
+                
+                <script>
+                    // Форматирование номера телефона при вводе
+                    document.getElementById('phoneInput').addEventListener('input', function(e) {
+                        let input = e.target.value;
+                        let cursorPosition = e.target.selectionStart;
+                        let oldLength = e.target.value.length;
+                        
+                        // Сохраняем только цифры
+                        let digits = input.replace(/\D/g, '');
+                        
+                        // Если начинается с 8, заменяем на 7
+                        if (digits.length > 0 && digits[0] === '8') {
+                            digits = '7' + digits.substring(1);
+                        }
+                        
+                        // Ограничиваем до 11 цифр (для +7 и 10-значного номера)
+                        if (digits.length > 11) {
+                            digits = digits.substring(0, 11);
+                        }
+                        
+                        // Форматируем номер
+                        let formatted = '+7';
+                        if (digits.length > 1) {
+                            formatted += ' (' + digits.substring(1, 4);
+                        }
+                        if (digits.length > 4) {
+                            formatted += ') ' + digits.substring(4, 7);
+                        }
+                        if (digits.length > 7) {
+                            formatted += '-' + digits.substring(7, 9);
+                        }
+                        if (digits.length > 9) {
+                            formatted += '-' + digits.substring(9, 11);
+                        }
+                        
+                        // Обновляем поле
+                        if (input !== formatted) {
+                            e.target.value = formatted;
+                        }
+                        
+                        // Вычисляем новую позицию курсора
+                        // Считаем, сколько символов было добавлено до текущей позиции
+                        let newCursorPosition = cursorPosition;
+                        if (digits.length > 0) {
+                            // Рассчитываем позицию курсора в отформатированной строке
+                            let digitCount = 0;
+                            let formattedPosition = 0;
+                            
+                            // Подсчитываем, сколько форматирующих символов добавлено до текущей позиции ввода
+                            for (let i = 0; i < input.length && i < cursorPosition; i++) {
+                                if (/\d/.test(input[i])) {
+                                    digitCount++;
+                                }
+                            }
+                            
+                            // Находим позицию в отформатированной строке
+                            let count = 0;
+                            for (let i = 0; i < formatted.length; i++) {
+                                if (/\d/.test(formatted[i])) {
+                                    count++;
+                                }
+                                if (count === digitCount) {
+                                    formattedPosition = i + 1;
+                                    break;
+                                }
+                            }
+                            
+                            newCursorPosition = formattedPosition;
+                        }
+                        
+                        // Устанавливаем курсор в правильную позицию
+                        setTimeout(() => {
+                            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+                        }, 0);
+                    });
+                    
+                    // Предотвращаем ввод нецифровых символов (для дополнительной защиты)
+                    document.getElementById('phoneInput').addEventListener('keydown', function(e) {
+                        // Разрешаем: Backspace, Delete, Tab, Escape, Enter, стрелки
+                        if ([46, 8, 9, 27, 13, 110, 190].indexOf(e.keyCode) !== -1 ||
+                            // Разрешаем: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z
+                            (e.keyCode === 65 && e.ctrlKey === true) ||
+                            (e.keyCode === 67 && e.ctrlKey === true) ||
+                            (e.keyCode === 86 && e.ctrlKey === true) ||
+                            (e.keyCode === 88 && e.ctrlKey === true) ||
+                            (e.keyCode === 90 && e.ctrlKey === true) ||
+                            // Разрешаем: стрелки
+                            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                             return;
+                        }
+                        
+                        // Убедимся, что это цифра
+                        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                            e.preventDefault();
+                        }
+                    });
+                    
+                    // Обработчик отправки формы
+                    document.getElementById('jobApplicationForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(e.target);
+                        const phone = formData.get('phone');
+                        
+                        // Валидация форматированного номера
+                        const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+                        if (!phoneRegex.test(phone)) {
+                            // Проверяем также формат без пробелов
+                            const altPhoneRegex = /^\+7\(?[\d]{3}\)?[\d-]{7,10}$/;
+                            if (!altPhoneRegex.test(phone.replace(/\s/g, ''))) {
+                                alert('Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX');
+                                return;
+                            }
+                        }
+                        
+                        try {
+                            const response = await fetch('/api/apply', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (response.ok) {
+                                // Показываем сообщение об успехе
+                                const messageDiv = document.getElementById('formMessage');
+                                messageDiv.querySelector('p').textContent = result.message;
+                                messageDiv.classList.remove('hidden');
+                                
+                                // Очищаем форму
+                                e.target.reset();
+                                
+                                // Скрываем сообщение через 5 секунд
+                                setTimeout(() => {
+                                    messageDiv.classList.add('hidden');
+                                }, 5000);
+                            } else {
+                                alert(result.error || 'Произошла ошибка при отправке заявки');
+                            }
+                        } catch (error) {
+                            console.error('Ошибка при отправке формы:', error);
+                            alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.');
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>
