@@ -1,6 +1,7 @@
 ---
 import "@styles/global.css"
 import Header from "@components/layouts/Header.astro"
+import Footer from "@components/layouts/Footer.astro"
 
 // Основные метаданные по умолчанию
 const siteTitle = "SAN MASTER - Найм сантехника в Ижевске";
@@ -15,29 +16,10 @@ const siteImage = "/og-image.jpg";
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-		<!-- Основные метатеги -->
+
 		<title>{siteTitle}</title>
 		<meta name="description" content={siteDescription} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		
-		<!-- Метатеги Open Graph (для социальных сетей) -->
-		<meta property="og:title" content={siteTitle} />
-		<meta property="og:description" content={siteDescription} />
-		<meta property="og:type" content={siteType} />
-		<meta property="og:url" content={siteUrl} />
-		<meta property="og:image" content={siteImage} />
-		<meta property="og:locale" content="ru_RU" />
-		
-		<!-- Метатеги Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={siteTitle} />
-		<meta name="twitter:description" content={siteDescription} />
-		<meta name="twitter:image" content={siteImage} />
-		
-		<!-- Повторяющиеся метатеги для безопасности -->
-		<meta name="theme-color" content="#ffffff" />
-		<meta name="msapplication-TileColor" content="#ffffff" />
 		<link rel="canonical" href={siteUrl} />
 	</head>
 	<body>
@@ -45,6 +27,7 @@ const siteImage = "/og-image.jpg";
         <main>
             <slot />
         </main>
+        <Footer />
 	</body>
 </html>
 
