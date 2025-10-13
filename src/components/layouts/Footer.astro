@@ -1,5 +1,60 @@
-<footer class="bg-gray-100 py-8 mt-auto">
+<footer class="bg-gray-100 py-8 mt-auto border-t border-gray-200">
   <div class="content-container text-center">
     <p class="text-gray-600">© {new Date().getFullYear()} SAN MASTER - Найм сантехника в Ижевске. Все права защищены.</p>
   </div>
+  
+  <!-- Кнопка возврата наверх для md и больших разрешений -->
+  <div class="hidden md:block fixed bottom-8 right-8 z-50">
+    <button 
+      id="scrollTopBtn"
+      class="bg-[var(--accent-primary)] hover:bg-[var(--accent-secondary)] text-white rounded-full p-3 shadow-lg transition-all duration-300 opacity-0 pointer-events-none"
+      aria-label="Вернуться наверх"
+    >
+      <svg 
+        class="w-6 h-6" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M5 15l7-7 7 7"
+        ></path>
+      </svg>
+    </button>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+      
+      // Показываем кнопку при прокрутке вниз
+      const handleScroll = () => {
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+          scrollTopBtn.classList.add('opacity-100');
+        } else {
+          scrollTopBtn.classList.remove('opacity-100');
+          scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+        }
+      };
+      
+      // Добавляем обработчик прокрутки
+      window.addEventListener('scroll', handleScroll);
+      
+      // Добавляем функционал прокрутки наверх
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Проверяем начальное состояние
+      handleScroll();
+    });
+  </script>
 </footer>
