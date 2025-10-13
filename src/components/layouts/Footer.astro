@@ -31,30 +31,33 @@
     document.addEventListener('DOMContentLoaded', () => {
       const scrollTopBtn = document.getElementById('scrollTopBtn');
       
-      // Показываем кнопку при прокрутке вниз
-      const handleScroll = () => {
-        if (window.scrollY > 300) {
-          scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-          scrollTopBtn.classList.add('opacity-100');
-        } else {
-          scrollTopBtn.classList.remove('opacity-100');
-          scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
-        }
-      };
-      
-      // Добавляем обработчик прокрутки
-      window.addEventListener('scroll', handleScroll);
-      
-      // Добавляем функционал прокрутки наверх
-      scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
+      // Проверяем, существует ли кнопка перед использованием
+      if (scrollTopBtn) {
+        // Показываем кнопку при прокрутке вниз
+        const handleScroll = () => {
+          if (window.scrollY > 300) {
+            scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            scrollTopBtn.classList.add('opacity-100');
+          } else {
+            scrollTopBtn.classList.remove('opacity-100');
+            scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+          }
+        };
+        
+        // Добавляем обработчик прокрутки
+        window.addEventListener('scroll', handleScroll);
+        
+        // Добавляем функционал прокрутки наверх
+        scrollTopBtn.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
         });
-      });
-      
-      // Проверяем начальное состояние
-      handleScroll();
+        
+        // Проверяем начальное состояние
+        handleScroll();
+      }
     });
   </script>
 </footer>
