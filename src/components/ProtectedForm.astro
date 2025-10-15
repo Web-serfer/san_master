@@ -1,0 +1,38 @@
+---
+export interface ProtectedFormProps {
+  formId: string;
+  action: string;
+  children: any;
+  additionalClasses?: string;
+}
+
+const { formId, action, children, additionalClasses = '' } = Astro.props;
+
+// Генерация уникального ID для каждого экземпляра
+const honeypotName = `honeypot_${Math.random().toString(36).substring(2, 10)}`;
+const formLoadTimeName = `form_load_time_${Math.random().toString(36).substring(2, 10)}`;
+---
+
+<form id={formId} method="post" action={action} class={additionalClasses}>
+  {/* Honeypot поле (должно быть скрытым для пользователей) */}
+  <input 
+    type="text" 
+    name={honeypotName} 
+    aria-label="Скрытое поле" 
+    autocomplete="off" 
+    class="absolute -left-96 w-0 h-0 overflow-hidden opacity-0"
+  />
+  {/* Поле для времени загрузки формы */}
+  <input type="hidden" name={formLoadTimeName} class="form-load-time-field" value="" />
+  
+  {children}
+</form>
+
+<script>
+  // Установка времени загрузки формы для текущей формы
+  const form = document.getElementById('{formId}');
+  const timeField = form.querySelector('.form-load-time-field');
+  if (timeField) {
+    timeField.value = Date.now();
+  }
+</script>

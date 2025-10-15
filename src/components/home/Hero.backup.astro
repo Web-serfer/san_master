@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import Button from '@components/base/Button.astro';
 import ProtectedForm from '@components/ProtectedForm.astro';
 import HeroImage from '@assets/images/Hero.png';
 
@@ -50,7 +51,7 @@ const buttonText = "Откликнуться за 30 секунд";
                                 name="phone"
                                 id="phoneInput"
                                 placeholder="+7 (XXX) XXX-XX-XX"
-                                pattern="^(\+7|8)\s?\(\d{3}\)[\s\-\d]{7,10}$"
+                                pattern="^(\\+7|8)\\s?\\(?[\\d]{3}\\)?[\\s\\-\\d]{7,10}$"
                                 class="px-6 py-4 text-lg rounded-lg border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent w-full sm:w-80"
                                 maxlength="18"
                                 oninvalid="this.setCustomValidity('')"
