@@ -46,14 +46,15 @@ const buttonText = "Откликнуться за 30 секунд";
                                 name="phone"
                                 id="phoneInput"
                                 placeholder="+7 (XXX) XXX-XX-XX"
-                                required
                                 pattern="^(\+7|8)\s?\(?[\d]{3}\)?[\s\-\d]{7,10}$"
                                 class="px-6 py-4 text-lg rounded-lg border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent w-full sm:w-80"
                                 maxlength="18"
+                                oninvalid="this.setCustomValidity('')"
+                                oninput="this.setCustomValidity('')"
                             />
                             <button
                                 type="submit"
-                                class="px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg whitespace-nowrap"
+                                class="px-8 py-4 text-lg font-semibold bg-[var(--button-bg)] hover:bg-[var(--button-hover)] text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg whitespace-nowrap hover:cursor-pointer"
                             >
                                 Откликнуться
                             </button>
@@ -66,6 +67,11 @@ const buttonText = "Откликнуться за 30 секунд";
                 <!-- Контейнер для сообщения об отправке -->
                 <div id="formMessage" class="hidden pt-4 text-center">
                     <p class="text-green-600 font-medium"></p>
+                </div>
+                
+                <!-- Контейнер для сообщения об ошибке -->
+                <div id="errorMessage" class="hidden pt-4 text-center">
+                    <p class="text-red-600 font-medium"></p>
                 </div>
                 
                 <script>
@@ -171,6 +177,19 @@ const buttonText = "Откликнуться за 30 секунд";
                         
                         const formData = new FormData(e.target);
                         const phone = formData.get('phone');
+                        const phoneInput = document.getElementById('phoneInput');
+                        const errorMessageDiv = document.getElementById('errorMessage');
+                        
+                        // Скрываем предыдущие сообщения об ошибках
+                        errorMessageDiv.classList.add('hidden');
+                        
+                        // Проверяем, заполнено ли поле
+                        if (!phone || phone.trim() === '') {
+                            errorMessageDiv.querySelector('p').textContent = 'Пожалуйста, введите номер телефона';
+                            errorMessageDiv.classList.remove('hidden');
+                            phoneInput.focus();
+                            return;
+                        }
                         
                         // Валидация форматированного номера
                         const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
@@ -178,9 +197,20 @@ const buttonText = "Откликнуться за 30 секунд";
                             // Проверяем также формат без пробелов
                             const altPhoneRegex = /^\+7\(?[\d]{3}\)?[\d-]{7,10}$/;
                             if (!altPhoneRegex.test(phone.replace(/\s/g, ''))) {
-                                alert('Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX');
+                                errorMessageDiv.querySelector('p').textContent = 'Пожалуйста, введите корректный номер телефона в формате +7 (XXX) XXX-XX-XX';
+                                errorMessageDiv.classList.remove('hidden');
+                                phoneInput.focus();
                                 return;
                             }
+                        }
+                        
+                        // Проверяем, что номер содержит 10 цифр после +7
+                        const digitsOnly = phone.replace(/\D/g, '');
+                        if (digitsOnly.length < 11) { // 11 включая 7
+                            errorMessageDiv.querySelector('p').textContent = 'Номер телефона должен содержать 10 цифр после +7';
+                            errorMessageDiv.classList.remove('hidden');
+                            phoneInput.focus();
+                            return;
                         }
                         
                         try {
@@ -197,6 +227,9 @@ const buttonText = "Откликнуться за 30 секунд";
                                 messageDiv.querySelector('p').textContent = result.message;
                                 messageDiv.classList.remove('hidden');
                                 
+                                // Скрываем сообщение об ошибке
+                                errorMessageDiv.classList.add('hidden');
+                                
                                 // Очищаем форму
                                 e.target.reset();
                                 
@@ -205,12 +238,22 @@ const buttonText = "Откликнуться за 30 секунд";
                                     messageDiv.classList.add('hidden');
                                 }, 5000);
                             } else {
-                                alert(result.error || 'Произошла ошибка при отправке заявки');
+                                errorMessageDiv.querySelector('p').textContent = result.error || 'Произошла ошибка при отправке заявки';
+                                errorMessageDiv.classList.remove('hidden');
                             }
                         } catch (error) {
                             console.error('Ошибка при отправке формы:', error);
-                            alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.');
+                            errorMessageDiv.querySelector('p').textContent = 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.';
+                            errorMessageDiv.classList.remove('hidden');
                         }
+                    });
+                    
+                    // Обработчик для проверки валидации при отправке формы
+                    document.getElementById('phoneInput').addEventListener('invalid', function(e) {
+                        e.preventDefault(); // Предотвращаем стандартное сообщение об ошибке
+                        const errorMessageDiv = document.getElementById('errorMessage');
+                        errorMessageDiv.querySelector('p').textContent = 'Пожалуйста, введите корректный номер телефона';
+                        errorMessageDiv.classList.remove('hidden');
                     });
                 </script>
             </div>
