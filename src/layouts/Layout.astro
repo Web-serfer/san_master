@@ -1,6 +1,6 @@
 ---
 import "@styles/global.css"
-import Header from "@components/layouts/Header.astro"
+import Header from "@components/layouts/header/Header.astro"
 import Footer from "@components/layouts/Footer.astro"
 
 // Основные метаданные по умолчанию
@@ -28,6 +28,26 @@ const siteImage = "/og-image.jpg";
             <slot />
         </main>
         <Footer />
+		<script>
+			// Запуск анимаций появления при загрузке DOM
+			document.addEventListener('DOMContentLoaded', () => {
+				// Небольшая задержка для уверенности, что все элементы загружены
+				setTimeout(() => {
+					// Запускаем анимации для элементов с классами animate-fadeIn*
+					const animatedElements = document.querySelectorAll('[class*=\"animate-fadeIn\"]');
+					animatedElements.forEach(element => {
+						// Убедимся, что анимация запускается
+						element.style.opacity = '0';
+						// Принудительно запускаем перерисовку
+						void element.offsetWidth;
+						// Убираем opacity-0 чтобы анимация сработала
+						if (element.classList.contains('opacity-0')) {
+							element.classList.remove('opacity-0');
+						}
+					});
+				}, 100);
+			});
+		</script>
 	</body>
 </html>
 

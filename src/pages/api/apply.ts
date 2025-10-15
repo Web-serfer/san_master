@@ -5,21 +5,9 @@ export const POST: APIRoute = async ({ request }) => {
   const phone = formData.get('phone') as string;
   const formType = formData.get('formType') as string;
 
-  // Проверяем наличие полей Honeypot и времени загрузки формы (динамические имена)
-  // Проходимся по всем полям формы и ищем подходящие по названию
-  let honeypotValue = '';
-  let formLoadTime = '';
-  
-  for (const [key, value] of formData.entries()) {
-    if (key.startsWith('honeypot_')) {
-      honeypotValue = value as string;
-    } else if (key.startsWith('form_load_time_')) {
-      formLoadTime = value as string;
-    }
-  }
-
   // Honeypot проверка - если поле заполнено, это бот
-  if (honeypotValue && honeypotValue.trim() !== '') {
+  const honeypot = formData.get('honeypot') as string;
+  if (honeypot && honeypot.trim() !== '') {
     return new Response(
       JSON.stringify({ 
         error: 'Обнаружена попытка автоматической отправки формы' 
@@ -32,6 +20,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // Time-based проверка
+  const formLoadTime = formData.get('form_load_time') as string;
   if (formLoadTime) {
     const loadTime = parseInt(formLoadTime);
     const currentTime = Date.now();

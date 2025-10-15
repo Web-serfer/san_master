@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import ProtectedForm from '@components/ProtectedForm.astro';
 import HeroImage from '@assets/images/Hero.png';
 
 
@@ -9,13 +8,13 @@ const description = "Стабильные выплаты 2 раза в меся�
 const buttonText = "Откликнуться за 30 секунд";
 ---
 
-<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-[var(--hero-bg)] opacity-0 animate-fadeInHero">
+<section class="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-[var(--hero-bg)] animate-fadeInHero">
     <!-- Контент -->
     <div class="relative z-20 w-full content-container py-6 md:py-16">
         <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
             <!-- Левая колонка с изображением -->
             <div class="md:w-1/2 flex justify-center items-center">
-                <div class="w-full max-w-lg opacity-0 animate-fadeInImage">
+                <div class="w-full max-w-lg animate-fadeInImage">
                     <Image
                         src={HeroImage}
                         alt="Сантехник работает в Казани"
@@ -27,7 +26,7 @@ const buttonText = "Откликнуться за 30 секунд";
             </div>
 
             <!-- Правая колонка с текстом -->
-            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left opacity-0 animate-fadeInContent">
+            <div class="md:w-1/2 flex flex-col justify-center text-center md:text-left animate-fadeInContent">
                 <div class="space-y-4 md:space-y-6">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-[var(--hero-text-primary)]">
                         {headline}
@@ -38,12 +37,18 @@ const buttonText = "Откликнуться за 30 секунд";
                 </div>
 
                 <!-- Форма для ввода номера телефона -->
-                <div class="pt-6 md:pt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start opacity-0 animate-fadeInButton">
-                    <ProtectedForm 
-                        formId="jobApplicationForm" 
-                        action="/api/apply"
-                        additionalClasses="w-full sm:w-auto"
-                    >
+                <div class="pt-6 md:pt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <form class="w-full sm:w-auto" id="jobApplicationForm" method="post" action="/api/apply">
+                        <!-- Honeypot поле (должно быть скрытым для пользователей) -->
+                        <input 
+                            type="text" 
+                            name="honeypot" 
+                            aria-label="Скрытое поле" 
+                            autocomplete="off" 
+                            class="absolute -left-96 w-0 h-0 overflow-hidden opacity-0"
+                        />
+                        <!-- Поле для времени загрузки формы -->
+                        <input type="hidden" name="form_load_time" id="formLoadTime" value="" />
                         <div class="flex flex-col sm:flex-row gap-4">
                             <input
                                 type="tel"
@@ -65,7 +70,7 @@ const buttonText = "Откликнуться за 30 секунд";
                         </div>
                         <!-- Скрытое поле для идентификации типа формы -->
                         <input type="hidden" name="formType" value="jobApplication" />
-                    </ProtectedForm>
+                    </form>
                 </div>
                 
                 <!-- Контейнер для сообщения об отправке -->
@@ -264,4 +269,7 @@ const buttonText = "Откликнуться за 30 секунд";
         errorMessageDiv.querySelector('p').textContent = 'Пожалуйста, введите корректный номер телефона';
         errorMessageDiv.classList.remove('hidden');
     });
+
+    // Установка времени загрузки формы
+    document.getElementById('formLoadTime').value = Date.now();
 </script>
